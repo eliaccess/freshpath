@@ -4,7 +4,7 @@ export interface Submission {
     address: string;
     captcha: string;
     timestamp: number;
-    foodImage?: string;
-    receiptImage?: string;
+    image1?: string;
+    image2?: string;
     deviceID?: string;
   }  

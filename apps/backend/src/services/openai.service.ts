@@ -83,7 +83,7 @@ export class OpenaiService {
   }
 
   public async simulateAnalysis(image: string): Promise<unknown> {
-    const dataMock = {is_receipt: true, is_food: true, weight_estimation: 10, validityFactor: 1}
+    const dataMock = {is_receipt: true, is_food: true, weight_estimation: 2, validityFactor: 1}
     return dataMock
   }
 }

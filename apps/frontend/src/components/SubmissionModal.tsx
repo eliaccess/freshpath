@@ -5,7 +5,6 @@ import {
   VStack,
   Text,
   HStack,
-  Image,
 } from "@chakra-ui/react";
 import { useDisclosure, useSubmission } from "../hooks";
 import loaderAnimation from "../assets/lottie/loader-json.json";
@@ -18,7 +17,7 @@ export const SubmissionModal = () => {
   const { isOpen, onClose } = useDisclosure();
 
   const renderContent = useMemo(() => {
-    const isValid = response?.validation.validityFactor === 1;
+    const isValid = response?.status === 200;
 
     return isValid ? (
       <VStack
@@ -36,10 +35,9 @@ export const SubmissionModal = () => {
           Congratulations!
         </Text>
         <HStack>
-          <Text fontSize={24} fontWeight={400}>
-            You've earned 1
+          <Text fontSize={24} fontWeight={400} align={"center"}>
+          {response?.validation}
           </Text>
-          <Image src="b3tr-token.svg" />
         </HStack>
       </VStack>
     ) : (
@@ -58,8 +56,8 @@ export const SubmissionModal = () => {
           Oops! AI says
         </Text>
         <HStack px={4}>
-          <Text fontSize={14} fontWeight={400} textAlign={"center"}>
-            {response?.validation.descriptionOfAnalysis}
+          <Text fontSize={14} fontWeight={400} align={"center"}>
+            {response?.validation}
           </Text>
         </HStack>
       </VStack>

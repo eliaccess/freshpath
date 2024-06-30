@@ -3,11 +3,11 @@ import { IsNotEmpty, IsString, Length } from 'class-validator';
 export class SubmitDto {
   @IsString()
   @IsNotEmpty()
-  public foodImage: string;
+  public image1: string;
 
   @IsString()
   @IsNotEmpty()
-  public receiptImage: string;
+  public image2: string;
 
   @IsString()
   @IsNotEmpty()

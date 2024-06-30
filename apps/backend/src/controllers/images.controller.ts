@@ -5,6 +5,7 @@ import { Submission } from '@/interfaces/images.interface';
 import { HttpException } from '@/exceptions/HttpException';
 import { ContractsService } from '@/services/contracts.service';
 import { CaptchaService } from '@/services/captcha.service';
+import { REWARD_AMOUNT } from '@/config';
 
 export class SubmissionController {
   public openai = Container.get(OpenaiService);
@@ -24,9 +25,10 @@ export class SubmissionController {
         timestamp: Date.now(),
       };
       
+      
       // Submission validation with smart contract 
-      await this.contracts.validateSubmission(submissionRequest);
-      const foodResult = await this.openai.simulateAnalysis(body.foodImage); // Change with this.openai.validateReceiptImage
+      // await this.contracts.validateSubmission(submissionRequest); // TODO: remove comment
+      const foodResult = await this.openai.simulateAnalysis(body.image1); // Change with this.openai.validateReceiptImage
 
       
       if (foodResult == undefined || !('is_food' in (foodResult as object))) {
@@ -35,23 +37,25 @@ export class SubmissionController {
 
       const isFood = foodResult['is_food'];
 
-      if (!isFood) res.status(400).json({validation: foodResult})
+      if (!isFood) res.status(400).json({validation: foodResult, status: 400})
       else {
         // Estimation of the weight of food saved
-        const foodFactor = foodResult['weight_estimation']
+            const foodFactor = foodResult['weight_estimation']
 
-        const receiptResult = await this.openai.simulateAnalysis(body.receiptImage); // Change with this.openai.validateReceiptImage
-        const isReceipt = foodResult['is_receipt'];
+            const receiptResult = await this.openai.simulateAnalysis(body.image2); // Change with this.openai.validateReceiptImage
+            const isReceipt = foodResult['is_receipt'];
 
-        if(!isReceipt) res.status(400).json({validation: receiptResult})
-        else {
-          // It is a receipt, then send money
-          await this.contracts.registerSubmission(submissionRequest, foodFactor);
-          res.status(200).json({ validation: "Success! Tokens credited on your account." });
+            if(!isReceipt) res.status(400).json({validation: receiptResult, status: 400})
+            else {
+              // It is a receipt, then send money
+              //await this.contracts.registerSubmission(submissionRequest, foodFactor); // TODO: remove comment
+              let message = "Success! " + (parseInt(REWARD_AMOUNT) * foodFactor).toString() + " tokens credited on your account."
+              console.log(message)
+              res.status(200).json({ validation: message, status: 200});
+            }
+          }
+        } catch (error) {
+          next(error);
         }
-      }
-    } catch (error) {
-      next(error);
-    }
   };
 }

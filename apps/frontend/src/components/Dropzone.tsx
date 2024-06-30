@@ -5,7 +5,7 @@ import { ScanIcon } from "./Icon";
 import { blobToBase64, getDeviceId, resizeImage } from "../util";
 import { useWallet } from "@vechain/dapp-kit-react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import { submitReceipt } from "../networking";
+import { submitImages } from "../networking";
 import { useDisclosure, useSubmission } from "../hooks";
 
 export const Dropzone = () => {
@@ -20,7 +20,7 @@ export const Dropzone = () => {
     onDrop: (acceptedFiles: File[]) => {
       onFileUpload(acceptedFiles); // Pass the files to the callback
     },
-    maxFiles: 1, // Allow only one file
+    maxFiles: 2, // Allow only one file
     accept: {
       "image/*": [], // Accept only image files
     },
@@ -38,8 +38,8 @@ export const Dropzone = () => {
 
   const onFileUpload = useCallback(
     async (files: File[]) => {
-      if (files.length > 1 || files.length === 0) {
-        alert("Please upload only one file");
+      if (files.length != 2) {
+        alert(files.length);
         return;
       }
 
@@ -51,10 +51,13 @@ export const Dropzone = () => {
       setIsLoading(true);
       onOpen();
 
-      const file = files[0];
+      const file1 = files[0];
+      const file2 = files[1];
 
-      const resizedBlob = await resizeImage(file);
-      const base64Image = await blobToBase64(resizedBlob as Blob);
+      const resizedBlob1 = await resizeImage(file1);
+      const resizedBlob2 = await resizeImage(file2);
+      const base64Image1 = await blobToBase64(resizedBlob1 as Blob);
+      const base64Image2 = await blobToBase64(resizedBlob2 as Blob);
 
       const captcha = await handleCaptchaVerify();
 
@@ -66,11 +69,12 @@ export const Dropzone = () => {
       const deviceID = await getDeviceId();
 
       try {
-        const response = await submitReceipt({
+        const response = await submitImages({
           address: account,
           captcha,
           deviceID,
-          image: base64Image,
+          image1: base64Image1,
+          image2: base64Image2
         });
 
         console.log(response);
@@ -114,35 +118,7 @@ export const Dropzone = () => {
             <input {...getInputProps()} />
             <HStack>
               <ScanIcon size={120} color={"gray"} />
-              <Text>Upload your receipt</Text>
-            </HStack>
-            </Box>
-            </td>
-            <td>
-          <Box
-              {...getRootProps()}
-              p={5}
-              border="2px"
-              borderColor={isDragActive ? "green.300" : "gray.300"}
-              borderStyle="dashed"
-              borderRadius="md"
-              bg={isDragActive ? "green.100" : "gray.50"}
-              textAlign="center"
-              cursor="pointer"
-              _hover={{
-                borderColor: "green.500",
-                bg: "green.50",
-              }}
-              w={"full"}
-              h={"200px"}
-              display="flex" // Make the Box a flex container
-              alignItems="center" // Align items vertically in the center
-              justifyContent="center" // Center content horizontally
-            >
-            <input {...getInputProps()} />
-            <HStack>
-              <ScanIcon size={120} color={"gray"} />
-              <Text>Upload a picture of your food</Text>
+              <Text>Upload a picture of your receipt and the food donation</Text>
             </HStack>
             </Box>
             </td>

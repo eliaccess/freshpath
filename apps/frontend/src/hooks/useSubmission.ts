@@ -1,11 +1,11 @@
 import { create } from "zustand";
-import { Response } from "../networking";
+import { ResponseImages } from "../networking";
 
 interface useSubmissionState {
   isLoading: boolean;
-  response: Response | null;
+  response: ResponseImages | null;
   setIsLoading: (isLoading: boolean) => void;
-  setResponse: (response: Response) => void;
+  setResponse: (response: ResponseImages) => void;
   clearAll: () => void;
 }
 

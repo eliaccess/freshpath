@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ReceiptData } from "./type";
+import { ReceiptData, ImagesData } from "./type";
 import { backendURL } from "../config";
 
 export type Response = {
@@ -15,6 +15,27 @@ export const submitReceipt = async (
   try {
     const response = await axios.post(
       `${backendURL}/submitReceipt`, 
+      data
+    );
+
+    return response.data;
+  } catch (error: unknown) {
+    console.error("Error posting data:", error);
+    throw error;
+  } 
+};
+
+export type ResponseImages = {
+  validation: string;
+  status: number;
+};
+
+export const submitImages = async (
+  data: ImagesData
+): Promise<ResponseImages> => {
+  try {
+    const response = await axios.post(
+      `${backendURL}/submitImages`, 
       data
     );
 
