@@ -30,4 +30,9 @@ export class OpenaiService {
 
     return openAIHelper.parseChatGPTJSONString(responseJSONStr);
   }
+
+  public async simulateAnalysis(image: string): Promise<unknown> {
+    const dataMock = {is_receipt: true, is_food: true, weight_estimation: 10, validityFactor: 1}
+    return dataMock
+  }
 }

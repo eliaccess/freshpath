@@ -16,6 +16,8 @@ export class ContractsService {
       [submission.address, `0x${ethers.parseEther(REWARD_AMOUNT).toString(16)}`],
     );
 
+    //console.log(`HERE ${ethers.parseEther(REWARD_AMOUNT)}`)
+
     const gasResult = await thor.gas.estimateGas([clause], ADMIN_ADDRESS);
 
     if (gasResult.reverted === true) throw new HttpException(500, `EcoEarn: Internal server error: ${gasResult.revertReasons}`);

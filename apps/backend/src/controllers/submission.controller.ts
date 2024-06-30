@@ -15,9 +15,10 @@ export class SubmissionController {
     try {
       const body: Omit<Submission, 'timestamp'> = req.body;
 
-      if (!(await this.captcha.validateCaptcha(body.captcha))) {
-        throw new HttpException(400, 'Invalid captcha. Please try again.');
-      }
+      // TODO: for dev only, remove comment later
+      // if (!(await this.captcha.validateCaptcha(body.captcha))) {
+      //   throw new HttpException(400, 'Invalid captcha. Please try again.');
+      // }
 
       const submissionRequest: Submission = {
         ...body,
@@ -27,7 +28,7 @@ export class SubmissionController {
       // Submission validation with smart contract
       await this.contracts.validateSubmission(submissionRequest);
 
-      const validationResult = await this.openai.validateImage(body.image);
+      const validationResult = await this.openai.simulateAnalysis(body.image);
 
       if (validationResult == undefined || !('validityFactor' in (validationResult as object))) {
         throw new HttpException(500, 'Error validating image');
