@@ -28,8 +28,8 @@ export class SubmissionController {
       
       // Submission validation with smart contract 
       // await this.contracts.validateSubmission(submissionRequest); // TODO: remove comment
-      const foodResult1 = await this.openai.simulateAnalysis(body.image1); // Change with this.openai.validateReceiptImage
-      const foodResult2 = await this.openai.simulateAnalysis(body.image2);
+      const foodResult1 = await this.openai.validateFoodImage(body.image1); // Change with this.openai.validateFoodImage
+      const foodResult2 = await this.openai.validateFoodImage(body.image2);
       
       if ((foodResult1 == undefined || !('is_food' in (foodResult1 as object))) &&
           (foodResult2 == undefined || !('is_food' in (foodResult2 as object)))) {
@@ -45,11 +45,11 @@ export class SubmissionController {
         // Estimation of the weight of food saved
             const foodFactor = foodResult['weight_estimation']
 
-            const receiptResult1 = await this.openai.simulateAnalysis(body.image1); // Change with this.openai.validateReceiptImage
-            const receiptResult2 = await this.openai.simulateAnalysis(body.image2);
+            const receiptResult1 = await this.openai.validateReceiptImage(body.image1); // Change with this.openai.validateReceiptImage
+            const receiptResult2 = await this.openai.validateReceiptImage(body.image2);
 
             const receiptResult = receiptResult1['is_receipt'] ? receiptResult1 : receiptResult2;
-            const isReceipt = foodResult['is_receipt'];
+            const isReceipt = receiptResult['is_receipt'];
 
             if(!isReceipt) res.status(400).json({validation: receiptResult, status: 400})
             else {

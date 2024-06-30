@@ -35,26 +35,21 @@ export class OpenaiService {
     if (!isBase64Image(image)) throw new HttpException(400, 'Invalid image format');
 
     const prompt = `
-                    As input, you will get a picture. Process it and respect the following decision tree:
+                    As input, you will get a picture. As an output, provide a JSON object. Process it and respect the following decision tree:
                     1. Does the picture a food bank donation receipt, or email confirmation?
                     - Yes, then go to step 2
-                    - No, then go to step 6
+                    - No, then go to step 4
                     2. Does the receipt looks like a legit one?
                     - Yes, then go to step 3
-                    - No, then go to step 6
-                    3. Is there the name of the food bank, or a company number?
-                    - Yes, then go to step 4
-                    - No, then go to step 5
-                    4. Extract the name of the company as company_name, and / or the company number as company_number, and return this in a json format, with is_receipt as true as well
-                    5. Return a json object that contains is_receipt variable as true
-                    6. Return a json object that contains is_receipt variable as false
+                    - No, then go to step 4
+                    3. Return a json object that contains is_receipt variable as true, like {'is_receipt': true}
+                    4. Return a json object that contains is_receipt variable as false, like {'is_receipt': false}
                     `;
 
     const gptResponse = await openAIHelper.askChatGPTAboutImage({
       base64Image: image,
       prompt,
     });
-
     const responseJSONStr = openAIHelper.getResponseJSONString(gptResponse);
 
     return openAIHelper.parseChatGPTJSONString(responseJSONStr);
@@ -65,11 +60,12 @@ export class OpenaiService {
 
     const prompt = `
                     As input, you will get a picture. Process it and respect the following decision tree:
-                    1. Does the picture contain food ?
+                    1. Does the picture contain food?
                     - Yes, then go to step 2
-                    - No, then return a json with an is_food variable as false
-                    2. Estimate the weight of food in pounds on the picture, then go to step 3
-                    3. Return a json object containing an is_food variable as true, and an weight_estimation variable as a float value estimated on step 2.
+                    - No, then return a json with an is_food variable as false like {'is_food': false}
+                    2. Estimate the weight of food in kilos on the picture, then go to step 3
+                    3. Add 1 to the estimated weight so that it is greater than 1, then go to step 4
+                    4. Return a json object containing an is_food variable as true, and an weight_estimation variable as a float value estimated on step 2 like {'is_food': false, 'weight_estimation': 1.2}.
                     `;
 
     const gptResponse = await openAIHelper.askChatGPTAboutImage({

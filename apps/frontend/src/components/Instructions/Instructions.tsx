@@ -13,7 +13,7 @@ const Steps = [
     description: "Upload your receipt and our AI will verify the transaction.",
   },
   {
-    icon: "/steps/2.svg",
+    icon: "/steps/4.svg",
     title: "Food!",
     description: "Let us get a peek at your donation!",
   },

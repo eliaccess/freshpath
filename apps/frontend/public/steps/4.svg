@@ -1,0 +1,19 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Bowl -->
+    <path
+        d="M40 100C40 120 130 120 160 100"
+        stroke="blue" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path
+        d="M40 100C40 90 80 110 160 100"
+        stroke="blue" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path
+        d="M40 100C50 160 150 160 160 100"
+        stroke="blue" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <path
+        d="M60 50L100 110"
+        stroke="blue" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path
+        d="M80 55L105 110"
+        stroke="blue" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
