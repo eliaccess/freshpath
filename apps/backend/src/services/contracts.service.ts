@@ -9,14 +9,13 @@ import { config } from '@repo/config-contract';
 import { TransactionHandler, clauseBuilder, coder } from '@vechain/sdk-core';
 @Service()
 export class ContractsService {
-  public async registerSubmission(submission: Submission): Promise<void> {
+  public async registerSubmission(submission: Submission, weight: number): Promise<void> {
+    const totalReward = (parseInt(REWARD_AMOUNT) * weight).toString();
     const clause = clauseBuilder.functionInteraction(
       config.CONTRACT_ADDRESS,
       coder.createInterface(EcoEarnABI).getFunction('registerValidSubmission'),
-      [submission.address, `0x${ethers.parseEther(REWARD_AMOUNT).toString(16)}`],
+      [submission.address, `0x${ethers.parseEther(totalReward).toString(16)}`],
     );
-
-    //console.log(`HERE ${ethers.parseEther(REWARD_AMOUNT)}`)
 
     const gasResult = await thor.gas.estimateGas([clause], ADMIN_ADDRESS);
 

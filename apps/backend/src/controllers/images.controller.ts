@@ -23,12 +23,12 @@ export class SubmissionController {
         ...body,
         timestamp: Date.now(),
       };
-
+      
       // Submission validation with smart contract 
       await this.contracts.validateSubmission(submissionRequest);
+      const foodResult = await this.openai.simulateAnalysis(body.foodImage); // Change with this.openai.validateReceiptImage
 
-      const foodResult = await this.openai.simulateAnalysis(body.foodImage);
-
+      
       if (foodResult == undefined || !('is_food' in (foodResult as object))) {
         throw new HttpException(500, 'Error validating image');
       }
@@ -40,13 +40,13 @@ export class SubmissionController {
         // Estimation of the weight of food saved
         const foodFactor = foodResult['weight_estimation']
 
-        const receiptResult = await this.openai.simulateAnalysis(body.receiptImage);
+        const receiptResult = await this.openai.simulateAnalysis(body.receiptImage); // Change with this.openai.validateReceiptImage
         const isReceipt = foodResult['is_receipt'];
 
         if(!isReceipt) res.status(400).json({validation: receiptResult})
         else {
           // It is a receipt, then send money
-          await this.contracts.registerSubmission(submissionRequest);
+          await this.contracts.registerSubmission(submissionRequest, foodFactor);
           res.status(200).json({ validation: "Success! Tokens credited on your account." });
         }
       }
