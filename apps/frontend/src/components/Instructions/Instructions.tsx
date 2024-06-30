@@ -20,7 +20,7 @@ const Steps = [
   {
     icon: "/steps/3.svg",
     title: "Earn 🤑",
-    description: "Earn B3TR for purchasing eco-friendly products.",
+    description: "Earn B3TR for donating food.",
   },
 ];
 
