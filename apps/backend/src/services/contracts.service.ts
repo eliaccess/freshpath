@@ -10,7 +10,7 @@ import { TransactionHandler, clauseBuilder, coder } from '@vechain/sdk-core';
 @Service()
 export class ContractsService {
   public async registerSubmission(submission: Submission, weight: number): Promise<void> {
-    const totalReward = (parseInt(REWARD_AMOUNT) * weight).toString();
+    const totalReward = Math.round(parseInt(REWARD_AMOUNT) * weight).toString();
     const clause = clauseBuilder.functionInteraction(
       config.CONTRACT_ADDRESS,
       coder.createInterface(EcoEarnABI).getFunction('registerValidSubmission'),

@@ -27,7 +27,7 @@ export class SubmissionController {
       
       
       // Submission validation with smart contract 
-      // await this.contracts.validateSubmission(submissionRequest); // TODO: remove comment
+      await this.contracts.validateSubmission(submissionRequest); // TODO: remove comment
       const foodResult1 = await this.openai.validateFoodImage(body.image1); // Change with this.openai.validateFoodImage
       const foodResult2 = await this.openai.validateFoodImage(body.image2);
       
@@ -54,8 +54,9 @@ export class SubmissionController {
             if(!isReceipt) res.status(400).json({validation: receiptResult, status: 400})
             else {
               // It is a receipt, then send money
-              //await this.contracts.registerSubmission(submissionRequest, foodFactor); // TODO: remove comment
-              let message = "Success! " + (parseInt(REWARD_AMOUNT) * foodFactor).toString() + " tokens credited on your account."
+              console.log(1 + foodFactor)
+              await this.contracts.registerSubmission(submissionRequest, 1 + foodFactor); // TODO: remove comment
+              let message = "Success! " + Math.round(parseInt(REWARD_AMOUNT) * (1 + foodFactor)).toString() + " tokens credited on your account."
               console.log(message)
               res.status(200).json({ validation: message, status: 200});
             }

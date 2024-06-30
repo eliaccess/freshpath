@@ -63,9 +63,8 @@ export class OpenaiService {
                     1. Does the picture contain food?
                     - Yes, then go to step 2
                     - No, then return a json with an is_food variable as false like {'is_food': false}
-                    2. Estimate the weight of food in kilos on the picture, then go to step 3
-                    3. Add 1 to the estimated weight so that it is greater than 1, then go to step 4
-                    4. Return a json object containing an is_food variable as true, and an weight_estimation variable as a float value estimated on step 2 like {'is_food': false, 'weight_estimation': 1.2}.
+                    2. Estimate the weight of food in kilograms on the picture, then go to step 3
+                    3. Return a json object containing an is_food variable as true, and an weight_estimation variable as a float value estimated on step 2 like {'is_food': false, 'weight_estimation': 1.2 }.
                     `;
 
     const gptResponse = await openAIHelper.askChatGPTAboutImage({
