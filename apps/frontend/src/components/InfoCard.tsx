@@ -16,24 +16,24 @@ export const InfoCard = () => {
     <Card w={"full"}>
       <Box p={3}>
         <VStack w={"full"} spacing={{ base: 2, md: 4 }}>
-          <Image src="/ecology-bag-with-leaves.png" borderRadius={16} />
+          <Image src="/new_central_image_foodbank.png" borderRadius={16} height={320}/>
           <Flex
             w={"full"}
             justifyContent={"space-between"}
             direction={{ base: "column", md: "row" }}
             alignItems={"center"}
           >
-            <HStack alignSelf={{ base: "center", md: "flex-start" }}>
+            {/* <HStack alignSelf={{ base: "center", md: "flex-start" }}>
               <Image src="/logo.png" h={16} borderRadius={16} />
               <Text fontSize={24} fontWeight={800}>
                 EcoEarn
               </Text>
-            </HStack>
+            </HStack> */}
             <Flex
               mt={{ base: 4, md: 0 }}
               direction={{ base: "column", md: "row" }}
             >
-              <Link isExternal href="https://github.com/vechain/x-app-template">
+              {/* <Link isExternal href="https://github.com/vechain/x-app-template">
                 <Button
                   rounded={"full"}
                   colorScheme="primary"
@@ -44,7 +44,7 @@ export const InfoCard = () => {
                 >
                   Github repository
                 </Button>
-              </Link>
+              </Link> */}
             </Flex>
           </Flex>
         </VStack>

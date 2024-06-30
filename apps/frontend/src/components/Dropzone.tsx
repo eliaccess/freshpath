@@ -87,32 +87,66 @@ export const Dropzone = () => {
 
   return (
     <VStack w={"full"} mt={3}>
-      <Box
-        {...getRootProps()}
-        p={5}
-        border="2px"
-        borderColor={isDragActive ? "green.300" : "gray.300"}
-        borderStyle="dashed"
-        borderRadius="md"
-        bg={isDragActive ? "green.100" : "gray.50"}
-        textAlign="center"
-        cursor="pointer"
-        _hover={{
-          borderColor: "green.500",
-          bg: "green.50",
-        }}
-        w={"full"}
-        h={"200px"}
-        display="flex" // Make the Box a flex container
-        alignItems="center" // Align items vertically in the center
-        justifyContent="center" // Center content horizontally
-      >
-        <input {...getInputProps()} />
-        <HStack>
-          <ScanIcon size={120} color={"gray"} />
-          <Text>Upload to scan</Text>
-        </HStack>
-      </Box>
+      
+        <table>
+          <td>
+          <Box
+              {...getRootProps()}
+              p={5}
+              padding={10}
+              border="2px"
+              borderColor={isDragActive ? "green.300" : "gray.300"}
+              borderStyle="dashed"
+              borderRadius="md"
+              bg={isDragActive ? "green.100" : "gray.50"}
+              textAlign="center"
+              cursor="pointer"
+              _hover={{
+                borderColor: "green.500",
+                bg: "green.50",
+              }}
+              w={"full"}
+              h={"200px"}
+              display="flex" // Make the Box a flex container
+              alignItems="center" // Align items vertically in the center
+              justifyContent="center" // Center content horizontally
+            >
+            <input {...getInputProps()} />
+            <HStack>
+              <ScanIcon size={120} color={"gray"} />
+              <Text>Upload your receipt</Text>
+            </HStack>
+            </Box>
+            </td>
+            <td>
+          <Box
+              {...getRootProps()}
+              p={5}
+              border="2px"
+              borderColor={isDragActive ? "green.300" : "gray.300"}
+              borderStyle="dashed"
+              borderRadius="md"
+              bg={isDragActive ? "green.100" : "gray.50"}
+              textAlign="center"
+              cursor="pointer"
+              _hover={{
+                borderColor: "green.500",
+                bg: "green.50",
+              }}
+              w={"full"}
+              h={"200px"}
+              display="flex" // Make the Box a flex container
+              alignItems="center" // Align items vertically in the center
+              justifyContent="center" // Center content horizontally
+            >
+            <input {...getInputProps()} />
+            <HStack>
+              <ScanIcon size={120} color={"gray"} />
+              <Text>Upload a picture of your food</Text>
+            </HStack>
+            </Box>
+            </td>
+        </table>
     </VStack>
   );
 };

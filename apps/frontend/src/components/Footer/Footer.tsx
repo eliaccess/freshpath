@@ -149,8 +149,8 @@ export const Footer: React.FC = () => {
         justifyContent={"flex-start"}
         flexDirection={"column"}
       >
-        <Show above="md">{desktopContent}</Show>
-        <Show below="md">{mobileContent}</Show>
+        {/* <Show above="md">{desktopContent}</Show>
+        <Show below="md">{mobileContent}</Show> */}
       </Container>
     </Flex>
   );
